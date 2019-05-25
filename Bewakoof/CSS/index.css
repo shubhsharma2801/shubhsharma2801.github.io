@@ -1,0 +1,82 @@
+
+.background{
+  background-color: #f1f1f1;
+}
+.dark{
+  background-color: black;
+}
+.grey{
+  font-weight: 100;
+  font-size: larger;
+  white-space: pre;
+}
+.input{
+  border-block-end-color: cyan;
+}
+
+.card-column{
+  margin-top: 15%;
+  margin-right: 40%;
+  width: 190%;
+
+}
+.card{
+  box-shadow: 12px 8px 4px rgba(0, 0, 0, 0.04), 12px 8px 4px rgba(0, 0, 0, 0.14), 4px 4px 4px rgba(0, 0, 0, 0.12);
+}
+.mycontent-left {
+  border-right: 1px dashed #333;
+  margin-left: 50%;
+}
+
+.mycontent-right {
+
+  margin-left: 10%;
+}
+.badge1{
+  margin-left: 4%;
+}
+.top{
+  top: 0%;
+}
+.blur {
+
+  background-color: #F1F3F3	;
+  margin:3%;
+
+}
+input{
+  border:none;
+  background-color: transparent;
+}
+.one-edge-shadow {
+    -webkit-box-shadow: 0 8px 6px -6px black;
+       -moz-box-shadow: 0 8px 6px -6px black;
+            box-shadow: 0 8px 6px -6px black;
+}
+.one-shadow {
+    -webkit-box-shadow: 0 1px 1px -6px black;
+       -moz-box-shadow: 0 1px 1px -6px black;
+            box-shadow: 0 1px 1px -6px black;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+.fa-user-circle-o{
+  color: gray;
+}
+.textalign{
+  text-align: center;
+}
+.div1{
+  text-align: center;
+}
+.green{
+  background-color: green;
+}
+.yellow{
+  background-color: yellow;
+}

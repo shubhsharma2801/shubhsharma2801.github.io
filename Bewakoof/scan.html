@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="CSS/index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title></title>
+  </head>
+  <body class="background" ng-app="myApp" ng-controller="myCtrl" ng-Cloak>
+
+      <header>
+        <button type="button" class="btn btn-primary">Back</button>
+      </header>
+      <div class="container" ng-show="showDetailClicked">
+        <div class="row one-shadow">
+          <div style="text-align: center;background-color:#B0CDED;border-bottom-left-radius:3px;border-bottom-right-radius: 3px;padding: 1%;"  class="col-12 col-md-12 col-lg-12">
+            <span >This Picklist</span>
+          </div>
+
+        </div>
+        <div style="background-color:#CDE1F8;border-bottom-left-radius:3px;border-bottom-right-radius: 3px;padding: 1%;" class="row one-edge-shadow">
+          <div style=""  class="col-3 col-md-3 col-lg-3 textalign">
+            <span ><b>54</b></span>
+            <br>
+            <span>Pending</span>
+          </div>
+          <div style=""  class="col-3 col-md-3 col-lg-3 textalign">
+            <span ><b>54</b></span>
+            <br>
+            <span>Picked</span>
+          </div>
+          <div style=""  class="col-3 col-md-3 col-lg-3 textalign">
+            <span ><b>54</b></span>
+            <br>
+            <span>Not Found</span>
+          </div>
+          <div style=""  class="col-3 col-md-3 col-lg-3 ">
+            <span class="textalign"><b>54</b></span>
+            <br>
+            <span>Qty</span>
+          </div>
+        </div>
+        &nbsp;
+        <div ng-repeat="card in cardJSONArray">
+
+          <div class="card" ng-class="card.status =='done' ? 'green' : (card.status == 'notfound' ? 'yellow' : '')">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                  <span style="float:left;">{{card.bin}}</span>
+                  <span style="float:right;">{{card.sku}}</span>
+                </div>
+              </div>
+              &nbsp;
+              <div class="row">
+                <div  class="col-4 col-sm-4 col-md-4 col-lg-4 div1">
+                  <span >{{card.qty - card.picked}}</span>
+                  <br>
+                  <span >Pending</span>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 div1">
+                  <span >{{card.notfound}}</span>
+                  <br>
+                  <span >Not Found</span>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 div1">
+                  <span >{{card.qty}}</span>
+                  <br>
+                  <span >Qty</span>
+                </div>
+              </div>
+            </div>
+              &nbsp;
+          </div>
+          &nbsp;
+          <br>
+        </div>
+
+
+      </div>
+
+
+
+      <form name="myForm" ng-hide="showDetailClicked">
+        <div class="container" >
+          <div class="row">
+            <div class="col-6 col-lg-6 col-sm-4 col-md-4 ">
+              <span class="grey">CRATE#</span>
+            </div>
+            <div class="col-6 col-lg-6 col-sm-4 col-md-4  ">
+              <span style="float:left;" class="grey">LAST SCANNED#</span>
+              <br>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 col-lg-6 col-sm-4 col-md-4 ">
+              <span ><b>{{card.bin}}</b><span>
+            </div>
+            <div class="col-6 col-lg-6 col-sm-4 col-md-4  ">
+              <span >{{lastScanned}}<span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 col-lg-6 col-sm-4 col-md-4 inner-addon right-addon">
+              <div class="input-group">
+
+                <input id="bin" type="text" name="" class="form-control input" ng-model="binInput" placeholder="{{card.bin}}" ng-keypress="myFunct($event)">
+                <span class="input-group-addon"><i ng-show="binScanned" class="fa fa-check" style="font-size:20px;color:green;margin: 50%;"></i></span>
+                <br>
+
+              </div>
+              <span style="color:red" >
+                <span ng-show="binScanned">SKU Barcode not scanned</span>
+              </span>
+
+            </div>
+            <div class="col-6 col-lg-6 col-sm-4 col-md-4  ">
+              <input id="sku" type="text" name="" class="form-control input" ng-model="skuInput" placeholder="{{card.sku}}" ng-keypress="skuEntered($event)">
+            </div>
+            <!-- For cards -->
+          </div>
+            &nbsp;
+
+
+        <div class="row">
+          <div class="col-12 col-md-12 col-lg-12">
+            <div style="margin-right:2.5%;z-index: 2; position: absolute; top: 0px; left: 0px;" class="container" >
+              <div class="row">
+                <div  class="col-12 col-md-12 col-lg-12">
+                <div class="card blur" >
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-6 col-lg-6 col-md-6 col-sm-6">
+                          <span style="font-size: larger;">{{card1.bin}}<span>
+                            <br>
+                          <span ><b>BIN</b><span>
+                        </div>
+                        <div  class="col-6 col-lg-6 col-md-6 col-sm-6">
+                          <span style="font-size: larger;">{{card1.sku}}<span>
+                            <br>
+                          <span ><b>SKU Barcode</b><span>
+                        </div>
+                      </div>
+                      &nbsp;
+                      <div class="row">
+                        <div style="width:50%;" class="span6">
+                          <div  class="mycontent-left">
+                              <span style="font-size: -webkit-xxx-large;background-color: inherit;" class="badge">{{card1.picked}}</span>
+                              <br>
+                              <span><b>PICKED</b></span>
+                          </div>
+                        </div>
+                          <div style="width:50%" class="span6">
+                            <div class="mycontent-right">
+                              <span style="font-size: -webkit-xxx-large;background-color: inherit;" class="badge">{{card1.qty}}</span>
+                              <br>
+                              <span ><b>QTY</b></span>
+                            </div>
+                          </div>
+                    </div>
+                    </div>
+                    <div style="text-align:center"class="card-footer">
+                      <span style="">Not Found</span>
+                    </div>
+                    </div>
+                </div>
+              </div>
+              &nbsp;
+            <div style="margin-left:2.5%;margin-right:2.5%;z-index: 1; position: absolute; top: 25%; left: -3%;" class="container " >
+                <div class="row">
+                  <div  class="col-12 col-md-12 col-lg-12">
+                  <div class="card " >
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-6 col-lg-6 col-md-6 col-sm-6">
+                            <span style="font-size: larger;">{{card.bin}}<span>
+                              <br>
+                            <span ><b>BIN</b><span>
+                          </div>
+                          <div  class="col-6 col-lg-6 col-md-6 col-sm-6">
+                            <span style="font-size: larger;">{{card.sku}}<span>
+                              <br>
+                            <span ><b>SKU Barcode</b><span>
+                          </div>
+                        </div>
+                        &nbsp;
+                        <div class="row">
+                          <div style="width:50%;" class="span6">
+                            <div  class="mycontent-left">
+                                <span style="font-size: -webkit-xxx-large;background-color: inherit;" class="badge">{{card.picked}}</span>
+                                <br>
+                                <span><b>PICKED</b></span>
+                            </div>
+                          </div>
+                            <div style="width:50%" class="span6">
+                              <div class="mycontent-right">
+                                <span style="font-size: -webkit-xxx-large;background-color: inherit;" class="badge">{{card.qty}}</span>
+                                <br>
+                                <span ><b>QTY</b></span>
+                              </div>
+                            </div>
+                      </div>
+                      </div>
+                      <div style="text-align:center"class="card-footer" ng-click="notfound()">
+                        <span style="">Not Found</span>
+                      </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div style="width:100%" class="btn-group btn-group-justified">
+                <div style="width:100%;margin-top: 20%;" class="row">
+                  <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                    <a style="width: 120%;border-radius:0px" href="#" class="btn btn-secondary" ng-click="showDetail()">Show Details</a>
+                  </div>
+                  <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                    <a style="width: 110%;border-radius:0px" href="#" class="btn btn-primary" >Done</a>
+                  </div>
+                </div>
+
+
+              </div>
+          </div>
+      </form>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js" charset="utf-8"></script>
+    <script src="JS/index.js" charset="utf-8"></script>
+
+  </body>
+</html>
